@@ -5,11 +5,14 @@ Default recipe reads key value pairs from node attributes and ensures the system
 
 NOTE: If you are getting this from the community site I've renamed it jn_sysctl, you will have to rename the cookbook to sysctl
 
-__WARNING:__ The default behavior is to write out /etc/sysctl.conf, which if you don't have settings in chef means you can kill your existing config.
+__WARNING:__ The default behavior on non-debian flavors is to write out /etc/sysctl.conf, which if you don't have settings in chef means you can kill your existing config. the __sysctl_file__ atribute can control where this file goes in a role/override if you wish.
 
 Attributes
 ----------
 * __sysctl__:  Hash of k/v pairs with sysctl settings.
+* __sysctl_file__: The location we write out the configuration
+  defaults to /etc/sysctl.conf on anything not debian flavor
+  defaults to /etc/sysctl.d/99-chef.conf on debian
 
 Sysctl LWRP
 ===========
@@ -26,7 +29,7 @@ Actions
 
 Known Bugs
 ----------
-* only really tested on CentOS/RedHat and Linux in general. YMMV on other platforms
+* only intended to be used on Linux
 
 Example Usage
 =============
@@ -38,7 +41,7 @@ Ensure running state, and write this key to sysctl.conf
        value 1
     end
 
-__Check out__ [recipes/example.rb] [2] For more recipe examples.
+__Check out__ [examples/recipes/example.rb] [2] For more recipe examples.
 
 
 Attributes
@@ -52,10 +55,11 @@ In a role attribute or override:
     }
 
 
-__Check out__ [attributes/example.rb] [1] For more attribute examples.
+__Check out__ [examples/attributes/example.rb] [1] For more attribute examples.
 
 Change Log
 ==========
+* 1.2.0:  Default behavior on debian is less destructive 
 * 1.1.0:  Adding in :write action support so that it writes /etc/sysctl
 * 1.0.2:  Initial public release
 
@@ -80,5 +84,5 @@ limitations under the License.
 
 
 
-[1]: https://github.com/spheromak/cookbooks/blob/master/sysctl/attributes/example.rb
-[2]: https://github.com/spheromak/cookbooks/blob/master/sysctl/recipes/example.rb
+[1]: https://github.com/spheromak/cookbooks/blob/master/sysctl/example/attributes/example.rb
+[2]: https://github.com/spheromak/cookbooks/blob/master/sysctl/example/recipes/example.rb

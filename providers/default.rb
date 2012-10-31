@@ -73,7 +73,7 @@ end
 
 # write out a config file
 action :write do
-  @config  = file "/etc/sysctl.conf" do
+  @config  = file node[:sysctl_file] do
     action :nothing
     owner "root"
     group "root"
@@ -102,7 +102,7 @@ action :write do
   @config.content entries
 
   # tell the config to build itself latter
-  @new_resource.notifies  :create, @new_resource.resources(:file =>"/etc/sysctl.conf") 
+  @new_resource.notifies  :create, @new_resource.resources(:file => node[:sysctl_file]) 
   
   save_to_node
 end

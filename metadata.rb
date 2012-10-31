@@ -3,4 +3,4 @@ maintainer_email "spheromak@gmail.com"
 license          "Apache 2.0"
 description      "Configure/Set sysctl paramaters"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "1.1.0"
+version          "1.2.0"
