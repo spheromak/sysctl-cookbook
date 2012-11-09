@@ -17,11 +17,9 @@
 # limitations under the License.
 #
 actions :set, :write
-
 attribute :name,  :kind_of => String,  :name_attribute => true 
 attribute :value, :kind_of => [ String, Fixnum, Integer ], :default => nil
 attribute :save,  :kind_of => [ TrueClass, FalseClass ], :default => true
-
 
 def initialize(*args)
   super

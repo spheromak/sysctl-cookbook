@@ -26,7 +26,6 @@ def initialize(*args)
     Chef::Log.info "Failed to locate sysctl on this system: STDERR: #{error_message}"
     Command.handle_command_failures(status, "STDOUT: #{output}\nSTDERR: #{error_message}")
   end
-  
 
   @sysctl = output.chomp
 end

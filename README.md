@@ -20,7 +20,7 @@ Properties
 ----------
 * __name__:  The key name. Defaults to the resource name i.e. sysctl "some.key"
 * __value__:  what to set this key to
-* __save__: save the setting back to the node data (default: yes)
+* __save__: save the setting back to the node data (default: true)
 
 Actions
 -------
@@ -41,7 +41,7 @@ Ensure running state, and write this key to sysctl.conf
        value 1
     end
 
-__Check out__ [examples/recipes/example.rb] [2] For more recipe examples.
+__Check out__ [example/recipes/example.rb] [2] For more recipe examples.
 
 
 Attributes
@@ -55,13 +55,8 @@ In a role attribute or override:
     }
 
 
-__Check out__ [examples/attributes/example.rb] [1] For more attribute examples.
+__Check out__ [example/attributes/example.rb] [1] For more attribute examples.
 
-Change Log
-==========
-* 1.2.0:  Default behavior on debian is less destructive 
-* 1.1.0:  Adding in :write action support so that it writes /etc/sysctl
-* 1.0.2:  Initial public release
 
 Author and License
 ===================
