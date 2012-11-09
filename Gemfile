@@ -1,0 +1,2 @@
+gem 'foodcritic'
+gem 'berkshelf'

@@ -55,7 +55,7 @@ end
 
 # save to node obj if we were asked to
 def save_to_node
-  node.sysctl["#{@new_resource.name}"]  = @new_resource.value if @new_resource.save == true
+  node.set[:sysctl]["#{@new_resource.name}"]  = @new_resource.value if @new_resource.save == true
 end
 
 # ensure running state
