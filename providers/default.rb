@@ -89,7 +89,7 @@ action :write do
       # dupes always take the last called setting. Enabling multipe redefines
       # but only resolving to a single setting in the config
       # NOTE: I am assuming the collection is in order seen.
-      r[resource.name] = "'#{resource.value}'\n" if resource.action.include?(:write)
+      r[resource.name] = "#{resource.value}\n" if resource.action.include?(:write)
       resource.updated_by_last_action true # kinda a cludge, but oh well 
     end
   end
