@@ -23,7 +23,6 @@ def initialize(*args)
   super
   status, output, error_message = output_of_command("which sysctl", {})
   unless status.exitstatus == 0
-    Chef::Log.info "Failed to locate sysctl on this system: STDERR: #{error_message}"
     Command.handle_command_failures(status, "STDOUT: #{output}\nSTDERR: #{error_message}")
   end
   
@@ -51,6 +50,7 @@ def load_current_resource
   status, @current_value, error_message = output_of_command(
       "#{@sysctl} #{@sysctl_args} #{@new_resource.name}", {:ignore_failure => true})
 
+  Chef::Log.info "#{new_resource.name} -> #{@current_value} := #{new_resource.value}"
 end
 
 # save to node obj if we were asked to
