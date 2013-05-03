@@ -5,3 +5,4 @@ Gemfile.lock
 tags 
 .tags 
 Berksfile.lock 
+.kitchen

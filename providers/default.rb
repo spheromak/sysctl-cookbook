@@ -55,7 +55,7 @@ end
 
 # save to node obj if we were asked to
 def save_to_node
-  node.sysctl["#{@new_resource.name}"]  = @new_resource.value if @new_resource.save == true
+  node.set[:sysctl][:values]["#{@new_resource.name}"]  = @new_resource.value if @new_resource.save == true
 end
 
 # ensure running state
@@ -73,38 +73,7 @@ end
 
 # write out a config file
 action :write do
-  @config  = file node[:sysctl_file] do
-    action :nothing
-    owner "root"
-    group "root"
-    mode "0644"
-  end
-
-  entries = "#\n# content managed by chef local changes will be overwritten\n#\n"
-  r = Hash.new 
-
-  # walk & gather on the collecton
-  run_context.resource_collection.each do |resource|
-    if resource.is_a? Chef::Resource::Sysctl
-      # using a hash to ensure uniqueness. We want to make sure that
-      # dupes always take the last called setting. Enabling multipe redefines
-      # but only resolving to a single setting in the config
-      # NOTE: I am assuming the collection is in order seen.
-      r[resource.name] = "'#{resource.value}'\n" if resource.action.include?(:write)
-      resource.updated_by_last_action true # kinda a cludge, but oh well 
-    end
-  end
-  
-  # flatten entries
-  entries << r.sort.map { |k,v| "#{k}=#{v}" }.join
-
-  # put those in the config file
-  @config.content entries
-
-  # tell the config to build itself latter
-  @new_resource.notifies  :create, @new_resource.resources(:file => node[:sysctl_file]) 
-  
-  save_to_node
+  # Implemented using the "accumulator" cook
 end
 
 
