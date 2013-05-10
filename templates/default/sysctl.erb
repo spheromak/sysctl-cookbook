@@ -3,7 +3,5 @@
 #
 
 <% @sysctl_entries.each do |resource| -%>
-  <% if resource.action.include?(:write) -%>
 <%= resource.name %>="<%= resource.value %>"    
-  <% end -%>
 <% end -%>

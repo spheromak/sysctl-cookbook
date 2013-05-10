@@ -25,4 +25,4 @@ node[:sysctl][:values].each_pair do |k,v|
  sysctl k do value v end
 end
 
-include_recipe "sysctl::writer"
+include_recipe "sysctl::default"

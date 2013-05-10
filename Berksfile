@@ -1,2 +1,2 @@
 metadata
-cookbook "accumulator", github: "kisoku/chef-accumulator"
+cookbook "accumulator", github: "kisoku/chef-accumulator", branch: "develop"
