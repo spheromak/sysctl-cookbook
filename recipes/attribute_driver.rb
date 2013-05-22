@@ -1,9 +1,9 @@
 #
 # Cookbook Name:: sysctl
-# Recipe:: writer
+# Recipe:: attribute_driver
 # Author:: jesse nelson <spheromak@gmail.com>
 #
-# This recipe writes a config to your platform sysctl.conf or sysctl.conf.d
+# This recipe simply reads attributes and drives them with the provider
 #
 # Copyright 2011, Jesse Nelson
 #
@@ -20,22 +20,9 @@
 # limitations under the License.
 #
 
-template node[:sysctl][:config_file] do
-  action :nothing
-  source "sysctl.erb"
-  owner "root"
-  group "root"
-  mode  0644
-  variables( :sysctl_entries => Array.new )
+# values from attributes and roles
+node[:sysctl][:values].each_pair do |k,v|
+ sysctl k do value v end
 end
 
-accumulator "sysctl.conf" do
-  target :template => node[:sysctl][:config_file]
-  filter { |resource| resource.is_a? Chef::Resource::Sysctl}
-  transform { |resources| 
-    list = Array.new
-    list = resources.map { |r| r if  r.action.include?(:write) }
-    list.compact.sort_by {|r| r.name } 
-  }
-  variable_name :sysctl_entries
-end
+include_recipe "sysctl::default"

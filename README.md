@@ -20,7 +20,7 @@ Properties
 ----------
 * __name__:  The key name. Defaults to the resource name i.e. sysctl "some.key"
 * __value__:  what to set this key to
-* __save__: save the setting back to the node data (default: true)
+* __save__: save the setting back to the node data (default: false)
 
 Actions
 -------
@@ -63,7 +63,7 @@ Author and License
 
 __Author__ Jesse Nelson <spheromak@gmail.com>
 
-Copyright 2011, Jesse Nelson
+Copyright 2011-2013, Jesse Nelson
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
