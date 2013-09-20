@@ -1,2 +1,8 @@
+# vim: set ft=ruby:
 metadata
-cookbook "accumulator", github: "kisoku/chef-accumulator", branch: "develop"
+
+
+group :integration do
+  cookbook "sysctl_test",
+    path: "test/cookbooks/sysctl_test"
+end
