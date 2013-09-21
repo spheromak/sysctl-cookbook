@@ -1,9 +1,8 @@
 DESCRIPTION
 ===========
-Manage sysctl sysctl provider.
-Default recipe reads key value pairs from node attributes and ensures the system state.
+Manage sysctl via a sysctl provider.
 
-NOTE: If you are getting this from the community site I've renamed it jn_sysctl, you will have to rename the cookbook to sysctl
+NOTE: If you are getting this from the community site it's named jn_sysctl. Due to some internal requirements the metadata sets it's name to "sysctl" this could cause some confusion.
 
 __WARNING:__ The default behavior on non-debian flavors is to write out /etc/sysctl.conf, which if you don't have settings in chef means you can kill your existing config. the __sysctl_file__ atribute can control where this file goes in a role/override if you wish.
 
@@ -13,6 +12,12 @@ Attributes
 * __sysctl_file__: The location we write out the configuration
   defaults to /etc/sysctl.conf on anything not debian flavor
   defaults to /etc/sysctl.d/99-chef.conf on debian
+
+Recipes
+---------
+* attribute_driver.rb: Reads attributes set in `node[:sysctl][:values]`, and sets sysctl resources with  the values
+* default.rb: Simply sets up the resources needed to use the lwrp  
+* library.rb: Empty recipe if you want to avoid default, but still want to explicitly include (for whatever reason)
 
 Sysctl LWRP
 ===========
@@ -26,6 +31,7 @@ Actions
 -------
 * __:set__  Make sure the running state is set  (default)
 * __:write__  Write the config file  (default)
+
 
 Known Bugs
 ----------

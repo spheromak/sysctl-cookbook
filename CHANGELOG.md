@@ -1,5 +1,10 @@
 Change Log
 ----------
+## 2.0.1
+* fix bug where we quote values in the template
+* fix kitchen setup
+* add some bats integration testing 
+
 ## 2.0.0
 * move to accumulator cookbook for building the single file
 * rearange the way we work with attributes (backward breaking)
