@@ -1,17 +1,18 @@
 #
 # Cookbook Name:: sysctl
-# Recipe:: default
+# Recipe:: writer
 # Author:: jesse nelson <spheromak@gmail.com>
-# This recipe simply reads attributes and drives them with the provider
+#
+# This recipe writes a config to your platform sysctl.conf or sysctl.conf.d
 #
 # Copyright 2011, Jesse Nelson
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #     http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,7 +20,22 @@
 # limitations under the License.
 #
 
-# default values from attributes and roles
-node.sysctl.each_pair do |k,v|
- sysctl k do value v end
+template node[:sysctl][:config_file] do
+  action :nothing
+  source "sysctl.erb"
+  owner "root"
+  group "root"
+  mode  0644
+  variables( :sysctl_entries => Array.new )
+end
+
+accumulator "sysctl.conf" do
+  target :template => node[:sysctl][:config_file]
+  filter { |resource| resource.is_a? Chef::Resource::Sysctl}
+  transform { |resources|
+    list = Array.new
+    list = resources.map { |r| r if  r.action.include?(:write) }
+    list.compact.sort_by {|r| r.name }
+  }
+  variable_name :sysctl_entries
 end

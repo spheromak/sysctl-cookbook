@@ -1,0 +1,8 @@
+Berksfile.lock
+Gemfile.lock
+.swap 
+.swp 
+tags 
+.tags 
+Berksfile.lock 
+.kitchen

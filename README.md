@@ -1,32 +1,50 @@
 DESCRIPTION
 ===========
-Manage sysctl sysctl provider.
-Default recipe reads key value pairs from node attributes and ensures the system state.
+Manage sysctl via a sysctl LWRP.
 
-NOTE: If you are getting this from the community site I've renamed it jn_sysctl, you will have to rename the cookbook to sysctl
-
-__WARNING:__ The default behavior is to write out /etc/sysctl.conf, which if you don't have settings in chef means you can kill your existing config.
 
 Attributes
 ----------
-* __sysctl__:  Hash of k/v pairs with sysctl settings.
+
+| Name | Value | Description
+|:---|:---|:--------
+|`default[:sysctl][:values]` | {}  | Hash Of Key Value pairs the attribute_driver recipe uses.
+|`default[:sysctl][:config_file]` | rhel: `"/etc/sysctl.conf"` debian: `"/etc/sysctl.d/99-chef.conf"` | The file to write values to.
+
+Recipes
+---------
+
+| Name | Description |
+|:-----|:------------|
+|attribute_driver.rb| Reads attributes set in `node[:sysctl][:values]`, and sets sysctl resources with  the values
+|default.rb| Simply sets up the resources needed to use the lwrp
+|library.rb| Empty recipe if you want to avoid default, but still want to explicitly include (for whatever reason)
 
 Sysctl LWRP
 ===========
-Properties
+
+
+Attributes
 ----------
-* __name__:  The key name. Defaults to the resource name i.e. sysctl "some.key"
-* __value__:  what to set this key to
-* __save__: save the setting back to the node data (default: yes)
+| Name | Type | Default | Description   |
+|:-----|:-----|:--------|:--------------|
+| `name` | `String` | `:name_attribute` |The key name. Defaults to the resource name i.e. sysctl "some.key"
+| `value`| `String`, `Fixnum`, `Integer` | The Value for this key
+| `save` | boolean | `true` | save the setting back to the node data (default: false)
 
 Actions
 -------
-* __:set__  Make sure the running state is set  (default)
-* __:write__  Write the config file  (default)
+| action | default | Description|
+|:-------|:--------|:-----------|
+| `:set` |  yes | Make sure the running state is set  (default)
+| `:write`| yes |  Write the config file  (default)
 
-Known Bugs
-----------
-* only really tested on CentOS/RedHat and Linux in general. YMMV on other platforms
+
+ Known Bugs
+ ----------
+ * RHEL/CentOS 6 now have sysctl.d Directory, we should generate a config in this dir instead
+ * only intended to be used on Linux
+
 
 Example Usage
 =============
@@ -38,7 +56,7 @@ Ensure running state, and write this key to sysctl.conf
        value 1
     end
 
-__Check out__ [recipes/example.rb] [2] For more recipe examples.
+__Check out__ [example/recipes/example.rb] [2] For more recipe examples.
 
 ChefSpec Matchers
 =================
@@ -65,19 +83,15 @@ In a role attribute or override:
     }
 
 
-__Check out__ [attributes/example.rb] [1] For more attribute examples.
+__Check out__ [example/attributes/example.rb] [1] For more attribute examples.
 
-Change Log
-==========
-* 1.1.0:  Adding in :write action support so that it writes /etc/sysctl
-* 1.0.2:  Initial public release
 
 Author and License
 ===================
 
 __Author__ Jesse Nelson <spheromak@gmail.com>
 
-Copyright 2011, Jesse Nelson
+Copyright 2011-2013, Jesse Nelson
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -93,5 +107,5 @@ limitations under the License.
 
 
 
-[1]: https://github.com/spheromak/cookbooks/blob/master/sysctl/attributes/example.rb
-[2]: https://github.com/spheromak/cookbooks/blob/master/sysctl/recipes/example.rb
+[1]: https://github.com/spheromak/cookbooks/blob/master/sysctl/example/attributes/example.rb
+[2]: https://github.com/spheromak/cookbooks/blob/master/sysctl/example/recipes/example.rb
