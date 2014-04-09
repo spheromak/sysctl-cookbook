@@ -16,12 +16,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-require "chef/mixin/command.rb"
+require 'chef/mixin/command.rb'
 include Chef::Mixin::Command
 
 def initialize(*args)
   super
-  status, output, error_message = output_of_command("which sysctl", {})
+  status, output, error_message = output_of_command('which sysctl', {})
   unless status.exitstatus == 0
     Command.handle_command_failures(status, "STDOUT: #{output}\nSTDERR: #{error_message}")
   end
@@ -36,10 +36,10 @@ end
 def load_current_resource
   # quick & dirty os detection
   @sysctl_args = case node.os
-  when "GNU/Linux","Linux","linux"
-    "-n -e"
+  when 'GNU/Linux', 'Linux', 'linux'
+    '-n -e'
   else
-    "-n"
+    '-n'
   end
 
   # clean up value whitespace when its a string
@@ -47,7 +47,7 @@ def load_current_resource
 
   # find current value
   status, @current_value, error_message = output_of_command(
-      "#{@sysctl} #{@sysctl_args} #{@new_resource.name}", {:ignore_failure => true})
+      "#{@sysctl} #{@sysctl_args} #{@new_resource.name}", ignore_failure: true)
 
   Chef::Log.info "#{new_resource.name} -> #{@current_value} := #{new_resource.value}"
 end
@@ -62,17 +62,14 @@ action :set do
   # heavy handed type enforcement only wnat to write if they are different  ignore inner whitespace
   if @current_value.to_s.strip.split != @new_resource.value.to_s.strip.split
     # run it
-    run_command( { :command => "#{@sysctl} #{@sysctl_args} -w #{@new_resource.name}='#{@new_resource.value}'" }  )
+    run_command(command: "#{@sysctl} #{@sysctl_args} -w #{@new_resource.name}='#{@new_resource.value}'")
     save_to_node
     # let chef know its done
-    @new_resource.updated_by_last_action  true
+    @new_resource.updated_by_last_action true
   end
 end
-
 
 # write out a config file
 action :write do
   # Implemented using the "accumulator" cook
 end
-
-
