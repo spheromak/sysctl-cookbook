@@ -1,5 +1,5 @@
-default[:sysctl] ||= {}
-default[:sysctl][:values] ||= {}
+default[:sysctl] = {}
+default[:sysctl][:values] = {}
 
 default[:sysctl][:config_file] = '/etc/sysctl.conf'
 if platform_family == 'debian'

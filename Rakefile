@@ -33,7 +33,7 @@ namespace :test do
     require 'rubocop/rake_task'
     Rubocop::RakeTask.new do |task|
       task.fail_on_error = true
-      task.options = %w{-D -a -c ./.rubocop.yml}
+      task.options = %w{-D -a}
     end
   rescue LoadError
     warn "Rubocop gem not installed, now the code will look like crap!"
