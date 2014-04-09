@@ -40,6 +40,19 @@ Ensure running state, and write this key to sysctl.conf
 
 __Check out__ [recipes/example.rb] [2] For more recipe examples.
 
+ChefSpec Matchers
+=================
+There are chefspec matchers in this cookbook to test your usage of the lwrp
+
+set_sysctl
+----------
+matcher for the set action
+
+write_sysctl
+------------
+matcher for the write action
+
+
 
 Attributes
 ----------
