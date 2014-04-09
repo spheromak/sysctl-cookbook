@@ -35,7 +35,7 @@ end
 # TODO: Make this work on other platforms better
 def load_current_resource
   # quick & dirty os detection
-  @sysctl_args = case node.os
+  @sysctl_args = case node[:os]
                  when 'GNU/Linux', 'Linux', 'linux'
                   '-n -e'
                  else

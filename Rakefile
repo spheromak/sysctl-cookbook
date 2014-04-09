@@ -23,7 +23,10 @@ namespace :test do
     require 'foodcritic'
     task :default => [:foodcritic]
     FoodCritic::Rake::LintTask.new do |t|
-      t.options = {:fail_tags => %w/correctness services libraries deprecated/ }
+      t.options = {
+        fail_tags: %w/correctness services libraries deprecated/,
+        exclude_paths: ['test/**/*', 'spec/**/*', 'features/**/*', 'example/**/*']
+       }
     end
   rescue LoadError
     warn "Foodcritic Is missing ZOMG"
