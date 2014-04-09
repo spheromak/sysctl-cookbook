@@ -22,7 +22,7 @@
 
 # values from attributes and roles
 node[:sysctl][:values].each_pair do |k, v|
-  sysctl k do value v end
+  sysctl k { value v }
 end
 
 include_recipe 'sysctl::default'

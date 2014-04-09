@@ -33,7 +33,6 @@ accumulator 'sysctl.conf' do
   target template: node[:sysctl][:config_file]
   filter { |resource| resource.is_a? Chef::Resource::Sysctl }
   transform do |resources|
-    list = Array.new
     list = resources.map { |r| r if  r.action.include?(:write) }
     list.compact.sort_by { |r| r.name }
   end

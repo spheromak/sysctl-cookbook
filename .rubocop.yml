@@ -8,6 +8,7 @@ AllCops:
     - providers/**
     - resources/**
   Exclude:
+    - example/**
     - test/**
     - vendor/**
 
