@@ -13,9 +13,7 @@ AllCops:
     - vendor/**
 
 Encoding:
-  Exclude:
-    - metadata.rb
-    - Gemfile
+  Enabled: false
 
 LineLength:
   Enabled: false
