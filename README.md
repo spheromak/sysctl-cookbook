@@ -78,7 +78,9 @@ In a role attribute or override:
 
     {
       "sysctl": {
-        "net.ipv4.tcp_window_scaling": 0
+        "values": {
+         "net.ipv4.tcp_window_scaling": 0
+        }
       }
     }
 
@@ -107,5 +109,5 @@ limitations under the License.
 
 
 
-[1]: https://github.com/spheromak/cookbooks/blob/master/sysctl/example/attributes/example.rb
-[2]: https://github.com/spheromak/cookbooks/blob/master/sysctl/example/recipes/example.rb
+[1]: https://github.com/spheromak/sysctl-cookbook/blob/master/example/attributes/example.rb
+[2]: https://github.com/spheromak/sysctl-cookbook/blob/master/example/recipes/example.rb
